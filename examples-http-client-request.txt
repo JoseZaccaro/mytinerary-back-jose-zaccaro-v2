@@ -1,0 +1,18 @@
+// POST - CITY
+{
+	"city":"Córdoba",
+	"country":"Argentina",
+	"continent":"América del sur",
+	"description":"La ciudad mas linda del mundo",
+	"image":"123"
+}
+
+// POST - USER
+{
+	"firstName":"Jhon",
+	"lastName":"Doe",
+	"email":"example@example.com",
+	"password":"password",
+	"image":"",
+	"country":"Argentina"
+}
