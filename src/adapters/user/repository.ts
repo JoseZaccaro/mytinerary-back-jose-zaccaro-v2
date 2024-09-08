@@ -14,7 +14,7 @@ class UserRepositoryImpl implements UserRepositoryInterface {
     public static get instance(): UserRepositoryImpl {
         if (!UserRepositoryImpl.#instance) {
             UserRepositoryImpl.#instance = new UserRepositoryImpl();
-            UserRepositoryImpl.#repository = new GenericRepository(User, userDTO);        
+            UserRepositoryImpl.#repository = new GenericRepository(User, userDTO);
         }
 
         return UserRepositoryImpl.#instance;
@@ -40,6 +40,19 @@ class UserRepositoryImpl implements UserRepositoryInterface {
     }
     async findByIdAndUpdate(id: string, user: UserInterface) {
         return await UserRepositoryImpl.#repository.findByIdAndUpdate(id, user)
+    }
+    
+    async findByEmail(email: string) {
+        try {
+            const user = await User.findOne({ email: email })
+            if (!user) {
+                return null
+            }
+            return user
+        } catch (error) {
+            console.log("Error: " + error);
+            throw new Error("Error in user service.");
+        }
     }
 
 

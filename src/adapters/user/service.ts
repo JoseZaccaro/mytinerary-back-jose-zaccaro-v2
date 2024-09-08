@@ -60,6 +60,19 @@ class UserServiceImpl implements UserServiceInterface {
         }
     }
 
+    async existsByEmail(email: string) {
+        try {
+            let userFounded = await UserRepository.instance.findByEmail(email)
+            if (!userFounded) {
+                return false
+            }
+            return true
+        } catch (error) {
+            console.log("Error: " + error);
+            throw new Error("Error in user service.");
+        }
+    }
+
 }
 
 export { UserServiceImpl as UserService }

@@ -6,10 +6,13 @@ import { CITY_PATCH } from "@/controllers/city/patch";
 
 const citiesRouter = express.Router();
 
-citiesRouter.get('/:id', CITY_GET.getOneCityById)
-citiesRouter.get('/', CITY_GET.getAllCities)
-citiesRouter.post('/', CITY_POST.createCity)
-citiesRouter.delete('/:id', CITY_DELETE.deleteCity)
-citiesRouter.patch('/:id', CITY_PATCH.updateCity)
+citiesRouter.route('/')
+    .get(CITY_GET.getAllCities)
+    .post(CITY_POST.createCity)
+
+citiesRouter.route('/:id')
+    .get(CITY_GET.getOneCityById)
+    .delete(CITY_DELETE.deleteCity)
+    .patch(CITY_PATCH.updateCity)
 
 export default citiesRouter

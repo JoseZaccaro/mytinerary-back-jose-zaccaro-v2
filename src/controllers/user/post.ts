@@ -9,7 +9,7 @@ async function createUser(req: any, res: any) {
             googleFlag = false, likedItinerariesId = undefined
         } = req.body
         
-        if(!image || image.trim() === "") image = firstName[0].toUpperCase()
+        if(!image || image.trim() === "") image = firstName[0].toUpperCase() + lastName[0].toUpperCase()
         if(!country || country.trim() === "") country = "No country"
 
         const newUser: UserInterface = {

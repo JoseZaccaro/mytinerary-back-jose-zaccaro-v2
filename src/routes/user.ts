@@ -6,9 +6,13 @@ import express from "express";
 
 const usersRouter = express.Router();
 
-usersRouter.get('/', USER_GET.getAllUsers)
-usersRouter.get('/:id', USER_GET.getOneUserById)
-usersRouter.post('/', USER_POST.createUser)
-usersRouter.delete('/:id', USER_DELETE.deleteUser)
-usersRouter.patch('/:id', USER_PATCH.updateUser)
+usersRouter.route('/')
+    .get(USER_GET.getAllUsers)
+    .post(USER_POST.createUser)
+
+usersRouter.route('/:id')
+    .get(USER_GET.getOneUserById)
+    .delete(USER_DELETE.deleteUser)
+    .patch(USER_PATCH.updateUser)
+    
 export default usersRouter
