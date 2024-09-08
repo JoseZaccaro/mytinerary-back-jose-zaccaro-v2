@@ -7,7 +7,7 @@ async function updateCity(req: any, res: any) {
         const { city, country, image, description, continent } = req.body
         const updatesCity: CityInterface = { city, country, image, description, continent, id: req.params.id }
 
-        const cityUpdated = await CityService.instance.updateOneById(updatesCity.id, updatesCity)
+        const cityUpdated = await CityService.instance.updateOneById(updatesCity.id as string, updatesCity)
 
         res.status(200).json({ message: "City updated", city: cityUpdated, status: 200 })
     } catch (error) {

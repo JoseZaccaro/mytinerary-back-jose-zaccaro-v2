@@ -64,7 +64,7 @@ class CityServiceImpl implements CityServiceInterface {
     }
 
 
-    async updateOneById(id: unknown, city: CityInterface) {
+    async updateOneById(id: string, city: CityInterface) {
         try {
             let cityUpdated = await CityRepository.instance.findByIdAndUpdate(id, city)
             return cityUpdated

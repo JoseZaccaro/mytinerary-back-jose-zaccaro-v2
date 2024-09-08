@@ -2,74 +2,44 @@ import { userDTO } from "@/domain/DTO/userDTO";
 import { UserInterface } from "@/domain/User";
 import { UserRepositoryInterface } from "@/ports/user/repository";
 import User from "./model";
+import { GenericRepository } from "../genericRepository";
 
 
 
 class UserRepositoryImpl implements UserRepositoryInterface {
     static #instance: UserRepositoryImpl;
-
+    static #repository: GenericRepository<UserInterface>;
     private constructor() { }
 
     public static get instance(): UserRepositoryImpl {
         if (!UserRepositoryImpl.#instance) {
             UserRepositoryImpl.#instance = new UserRepositoryImpl();
+            UserRepositoryImpl.#repository = new GenericRepository(User, userDTO);        
         }
 
         return UserRepositoryImpl.#instance;
     }
 
+    private static get repository() {
+        return undefined;
+    }
 
     async save(user: UserInterface) {
-        try {
-            const newUser = await User.create(user)
-
-            return userDTO(newUser)
-        } catch (error) {
-            console.log("Error: " + error);
-            throw new Error("Error in user repository");
-        }
+        return await UserRepositoryImpl.#repository.save(user)
     }
+
     async findById(id: string) {
-        try {
-            const findedUser = await User.findById(id)
-
-            if (!findedUser) throw new Error("User not found")
-
-            return userDTO(findedUser)
-        } catch (error) {
-            console.log("Error: " + error);
-            throw new Error("Error in user repository");
-        }
+        return await UserRepositoryImpl.#repository.findById(id)
     }
-    async findAll() {
-        try {
-            const findedUsers = await User.find()
 
-            return findedUsers.map(userDTO)
-        } catch (error) {
-            console.log("Error: " + error);
-            throw new Error("Error in user repository");
-        }
+    async findAll() {
+        return await UserRepositoryImpl.#repository.findAll()
     }
     async deleteById(id: string) {
-        try {
-            const deletedUser = await User.findByIdAndDelete(id)
-            if (!deletedUser) throw new Error("User not found")
-        } catch (error) {
-            console.log("Error: " + error);
-            throw new Error("Error in user repository");
-        }
-
+        await UserRepositoryImpl.#repository.deleteById(id)
     }
-    async findByIdAndUpdate(id: string, city: UserInterface) {
-        try {
-            const updatedUser = await User.findByIdAndUpdate(id, city, { new: true })
-            if (!updatedUser) throw new Error("User not found")
-            return userDTO(updatedUser)
-        } catch (error) {
-            console.log("Error: " + error);
-            throw new Error("Error in user repository");
-        }
+    async findByIdAndUpdate(id: string, user: UserInterface) {
+        return await UserRepositoryImpl.#repository.findByIdAndUpdate(id, user)
     }
 
 
