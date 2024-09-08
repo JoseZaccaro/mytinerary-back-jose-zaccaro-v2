@@ -1,6 +1,7 @@
 import { UserInterface } from "@/domain/User";
 import { UserServiceInterface } from "@/ports/user/service";
 import { UserRepository } from "./repository";
+import bcrypt from 'bcryptjs';
 
 class UserServiceImpl implements UserServiceInterface {
     static #instance: UserServiceImpl;
@@ -60,6 +61,19 @@ class UserServiceImpl implements UserServiceInterface {
         }
     }
 
+    async findByEmail(email: string) {
+        try {
+            let userFounded = await UserRepository.instance.findByEmail(email)
+            if (!userFounded) {
+                return null
+            }
+            return userFounded
+        } catch (error) {
+            console.log("Error: " + error);
+            throw new Error("Error in user service.");
+        }
+    }
+
     async existsByEmail(email: string) {
         try {
             let userFounded = await UserRepository.instance.findByEmail(email)
@@ -71,6 +85,10 @@ class UserServiceImpl implements UserServiceInterface {
             console.log("Error: " + error);
             throw new Error("Error in user service.");
         }
+    }
+    
+    encryptPassword(password: string): string {
+        return bcrypt.hashSync(password)
     }
 
 }
