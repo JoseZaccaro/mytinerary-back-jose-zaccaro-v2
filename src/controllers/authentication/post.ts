@@ -43,7 +43,11 @@ async function signIn(req: Request, res: Response) {
         const { email } = req.body
         let user = await UserService.instance.findByEmail(email);
 
-        res.status(200).json({ message: "User signed in successfully.", user, status: 200 })
+        if (!user) throw new Error("User not found.")
+
+        const token = UserService.instance.generateToken(user.id, user.email)
+
+        res.status(200).json({ message: "User signed in successfully.", user, token, status: 200 })
 
     } catch (error) {
         console.log("Error: " + error);

@@ -2,7 +2,7 @@ import { UserInterface } from "@/domain/User";
 import { UserServiceInterface } from "@/ports/user/service";
 import { UserRepository } from "./repository";
 import bcrypt from 'bcryptjs';
-
+import jwt from 'jsonwebtoken';
 class UserServiceImpl implements UserServiceInterface {
     static #instance: UserServiceImpl;
 
@@ -86,9 +86,14 @@ class UserServiceImpl implements UserServiceInterface {
             throw new Error("Error in user service.");
         }
     }
-    
+
     encryptPassword(password: string): string {
         return bcrypt.hashSync(password)
+    }
+
+    generateToken(id: string, email: string): string {
+        const token = jwt.sign({ id, email }, process.env.JWT_SECRET || "secret", { expiresIn: '1d' })
+        return token
     }
 
 }

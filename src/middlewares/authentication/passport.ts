@@ -8,7 +8,7 @@ passport.use(
         secretOrKey: process.env.JWT_SECRET || "secret"
     }, async (payload, done) => {
         try {
-            const user = UserService.instance.getOneById(payload.id)
+            const user = await UserService.instance.getOneById(payload.id)            
             if (!user) return done(null, false)
             return done(null, user)
         } catch (error) {
@@ -16,3 +16,5 @@ passport.use(
         }
     })
 )
+
+export { passport as passportMiddleware }
