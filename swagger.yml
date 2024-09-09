@@ -1,0 +1,81 @@
+openapi: '3.0.3'
+info:
+  title: API MyTinerary
+  version: '1.0'
+servers:
+  - url: http://localhost:3000/api
+    description: Local server
+  - url: https://mytinerary-backend.onrender.com/api
+    description: Web server
+
+components:
+  schemas:
+    city:
+      type: object
+      properties:
+        id:
+          type: string
+          format: objectId
+          nullable: false
+        city:
+          type: string
+        country:
+          type: string
+        continent:
+          type: string
+        description:
+          type: string
+        image:
+          type: string
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: 'id of the city'
+      schema:
+        type: string
+
+  responses:
+    '500':
+      description: Internal server error
+
+paths:
+  /cities:
+    get:
+      summary: Get all cities
+      tags:
+        - City
+      responses:
+        '500':
+          $ref: "#/components/responses/500"
+        '200':
+          description: A successful response
+
+
+  /cities/{id}:
+    get:
+      summary: Get one city
+      tags:
+        - City
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: A successful response
+        '500':
+          $ref: "#/components/responses/500"
+
+    delete:
+      summary: Delete one city
+      tags:
+        - City
+      parameters:
+        - $ref: '#/components/parameters/id'
+
+      responses:
+        '200':
+          description: A successful response
+        '500':
+          $ref: "#/components/responses/500"
+  

@@ -94,6 +94,7 @@ out
 # Nuxt.js build / generate output
 .nuxt
 dist
+lib
 
 # Gatsby files
 .cache/
@@ -187,4 +188,5 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/node,windows,visualstudiocode
+
+webpack.config.js

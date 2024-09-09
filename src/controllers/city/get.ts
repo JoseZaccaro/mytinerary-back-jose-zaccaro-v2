@@ -1,5 +1,4 @@
-import { CityService } from "@/adapters/city/service"
-import { CityInterface } from "@/domain/City"
+import { CityService } from "@/adapters/city/service";
 
 
 async function getOneCityById(req: any, res: any) {
@@ -27,4 +26,4 @@ const CITY_GET = {
     getAllCities
 } as const
 
-export { CITY_GET } 
+export { CITY_GET };
